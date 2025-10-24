@@ -1,32 +1,37 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import Home from './components/Home';
+import { Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminDashboard from './components/AdminDashboard';
+import StandardDashboard from './components/StandardDashboard';
+import Layout from './components/Layout'; 
 
 function App() {
   return (
     <div>
-      <nav style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
-        <Link to="/" style={{ margin: '0 10px' }}>Home (Pública)</Link>
-        <Link to="/login" style={{ margin: '0 10px' }}>Login</Link>
-        <Link to="/dashboard" style={{ margin: '0 10px' }}>Dashboard (Protegida)</Link>
-      </nav>
 
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: '0px' }}>
         <Routes>
-          {/* Rutas Públicas */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          
+          {/* 1. RUTA RAÍZ: La página de Login es la primera que se muestra (./). */}
+          <Route path="/" element={<Login />} /> 
 
-          {/* Grupo de Rutas Protegidas (Usando ProtectedRoute como layout) */}
+          {/* 2. GRUPO DE RUTAS PROTEGIDAS: Protegidas por autenticación */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            {/* Puedes añadir más rutas protegidas aquí */}
+            
+            {/* 3. LAYOUT WRAPPER: Todas las rutas protegidas usan el Layout (Toolbar + Sidebar) */}
+            <Route element={<Layout />}>
+              
+              {/* Rutas Principales de Dashboard (Protegidas y con Layout) */}
+              <Route path="/admin-view" element={<AdminDashboard />} />    
+              <Route path="/standard-view" element={<StandardDashboard />} /> 
+              
+              {/* Rutas Hijas para la navegación del Sidebar */}
+              <Route path="/admin-view/:section" element={<AdminDashboard />} />
+              <Route path="/standard-view/:section" element={<StandardDashboard />} />
+            </Route>
           </Route>
 
-          {/* Opcional: Manejo de 404 */}
           <Route path="*" element={<h1>404 - Ruta no encontrada</h1>} />
         </Routes>
       </div>
