@@ -1,10 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Login from './components/Login';
-import ProtectedRoute from './components/ProtectedRoute';
-import AdminDashboard from './components/AdminDashboard';
-import StandardDashboard from './components/StandardDashboard';
-import Layout from './components/Layout'; 
+import Login from './presentation/components/auth/Login';
+import ProtectedRoute from './presentation/routes/ProtectedRoute';
+import AdminDashboard from './presentation/components/admin/AdminDashboard';
+import StandardDashboard from './presentation/components/standard/StandardDashboard';
+import Layout from './presentation/components/common/Layout'; 
 
 function App() {
   return (
